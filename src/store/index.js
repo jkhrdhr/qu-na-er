@@ -4,12 +4,16 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
+      state: {
+            city: '北京'
+      },
+      mutations: {
+            addCity (state, city) {
+                  state.city = city
+            }
+      },
+      actions: {
+      },
+      modules: {
+      }
 })

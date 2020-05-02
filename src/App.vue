@@ -1,32 +1,50 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <transition :name="transitionName">
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
+    </transition>
   </div>
 </template>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+export default {
+  data () {
+    return {
+      transitionName: ''
+    }
+  },
+  watch: {
+    $route: function (to, from) {
+      // to是到哪里去
+      if (to.meta.index > from.meta.index) {
+        this.transitionName = 'right'
+      } else if (to.meta.index < from.meta.index) {
+        this.transitionName = 'left'
+      }
+    }
+  }
 }
-
-#nav {
-  padding: 30px;
+</script>
+<style leng="less" scoped>
+.left-enter,
+.left-leave-to,
+.right-enter,
+.right-leave-to {
+  opacity: 0;
 }
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.right-enter {
+  transform: translateX(100%);
+  -webkit-transform: translateX(100%);
 }
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.right-enter-active {
+  transition: all 0.3s;
+}
+.left-enter {
+  transform: translateX(-100%);
+  -webkit-transform: translateX(-100%);
+}
+.left-enter-active {
+  transition: all 0.3s;
 }
 </style>
